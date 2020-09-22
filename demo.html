@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function onload() {
+                var tds = document.getElementsByTagName("td");
+                for(var i = 0; i < tds.length; i++) {
+                    tds[i].onclick = 
+                                    function(td) { 
+                                        return function() { 
+                                            tdOnclick(td); 
+                                        }; 
+                                    }(tds[i]); 
+                }
+                var inputs = document.getElementsByTagName("input");
+                for(var i = 0; i < inputs.length; i++) {
+                    inputs[i].onclick = 
+                                    function(input){ 
+                                        return function() { 
+                                            inputOnclick(input); 
+                                        };
+                                    }(inputs[i]); 
+                }
+            }
+            function tdOnclick(td) {
+                for(var i = 0; i < td.childNodes.length; i++) {
+                    if(td.childNodes[i].nodeType == 1) {
+                        if(td.childNodes[i].nodeName == "INPUT") {
+                            if(td.childNodes[i].checked) {
+                                td.childNodes[i].checked = false;
+                                td.style.backgroundColor = "red";
+                            } else {
+                                td.childNodes[i].checked = true;
+                                td.style.backgroundColor = "green";
+                            }
+                        } else {
+                            tdOnclick(td.childNodes[i]);
+                        }
+                    }
+                }
+            }
+            function inputOnclick(input) {
+                input.checked = !input.checked;
+                return false;
+            }
+        </script>
+    </head>
+    <body onload="onload()">
+        <table>
+            <tr>
+                <td><center>9:00 - 10:00</center></td>
+                <td><center><input type="checkbox" name="free" value="mon09"></center></td>
+                <td><center><input type="checkbox" name="free" value="tue09"></center></td>
+                <td><center><input type="checkbox" name="free" value="wed09"></center></td>
+                <td><center><input type="checkbox" name="free" value="thu09"></center></td>
+                <td><center><input type="checkbox" name="free" value="fri09"></center></td>
+            </tr>
+        </table>
+    </body>
+</html>
